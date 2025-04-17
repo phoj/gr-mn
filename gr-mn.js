@@ -1,3 +1,6 @@
+var http=require("http")
+var message="startTime:"+new Date().toLocaleString('zh-CN',{timeZone:'Asia/Taipei'})
+
 var arr
 get()
 function get(){
@@ -10,5 +13,12 @@ function get(){
  setTimeout(get,3000)
 }
 
+
+
+http.createServer(function(req,res){
+ if(req.url=='/favicon.ico'){res.end();return}
+ res.writeHead(200,{"content-type":"text/plain;charset=utf-8"})
+ res.end(message)
+}).listen(8080)
 
 

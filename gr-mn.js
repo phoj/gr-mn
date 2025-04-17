@@ -11,7 +11,7 @@ function get(){
   console.log('欲讀取圖磚共',arr.length)
   arr.length=0
  }).catch(err=>console.log("請求0-18.txt錯誤",err))
- setTimeout(get,3000)
+ setTimeout(get,10000)
 }
 
 

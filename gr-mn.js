@@ -1,4 +1,4 @@
-var http=require("http")
+var http=require("http"),https=require("https")
 var message="startTime:"+new Date().toLocaleString('zh-CN',{timeZone:'Asia/Taipei'})
 var pbfObj={},statistic
 get()
@@ -27,11 +27,10 @@ async function check(z){
  for(let x in pbfObj[z]){
   for(let y of pbfObj[z][x]){
    const url=`https://grmn.iqiq.cc/${z}/${x}/${y}.pbf`
-   console.log(url)/////////////////////////////////////////////////////////////////////////////////////////////////
    sum++;statistic.CURRENT[0]++;statistic.CURRENT[1]=url
    await new Promise(resolve=>{
     if(sum<=5)resolve()///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    const req=https.get(url,{timeout:10000},res=>{res.destroy()
+    const req=https.get(url,{timeout:10000},res=>{res.destroy();console.log(url)/////////////////////////////////////////////////////////////////////////////////////////////////
      let status=res.statusCode
      if(status!=200){
       if(!statistic.ERROR.hasOwnProperty(status))statistic.ERROR[status]=0

@@ -1,7 +1,6 @@
 var http=require("http")
 var message="startTime:"+new Date().toLocaleString('zh-CN',{timeZone:'Asia/Taipei'})
-
-pbfObj={},statistic
+var pbfObj={},statistic
 get()
 function get(){
  fetch('https://raw.githubusercontent.com/wbjon/2510/main/0-18.txt')

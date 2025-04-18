@@ -16,7 +16,7 @@ function get(){
    pbfObj[path[0]][path[1]].push(path[2])
   }
   console.log(Object.keys(pbfObj))
-  //check(0)
+  check(0)//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //arr.length=0
  }).catch(err=>console.log("請求0-18.txt錯誤",err))
 }
@@ -29,7 +29,7 @@ async function check(z){
    const url=`https://grmn.iqiq.cc/${z}/${x}/${y}.pbf`
    sum++;statistic.CURRENT[0]++;statistic.CURRENT[1]=url
    await new Promise(resolve=>{
-    if(sum<=20)resolve()
+    if(sum<=5)resolve()///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     const req=https.get(url,{timeout:10000},res=>{res.destroy()
      let status=res.statusCode
      if(status!=200){
@@ -51,14 +51,14 @@ async function check(z){
  end=true;loop()
  function loop(){
   if(end&&sum==0){
-   if(z==18){
+   if(z==4){//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     const sheet=data=>{
      fetch('https://script.google.com/macros/s/AKfycbwC42_mTmRl9XV5KTrWbU9o2mjAHJC3X_xj2VqEld9iLkGdrrQXI75xQ81V4hlEY473gA/exec?console='+encodeURIComponent(data))
      .then(res=>{if(res.status!=200){console.log('sheet status:',res.status);sheet(data)}}).catch(e=>{console.log('sheet error:',e);sheet(data)})
     }
     statistic.endTIME=new Date().toLocaleString('zh-CN',{timeZone:'Asia/Taipei'})
     sheet(JSON.stringify(statistic))
-    statistic={CURRENT:[0,''],SUMMATION:statistic.SUMMATION,startTIME:'',HIT:0,HITratio:'',MISS:0,EXPIRED:0,endTIME:'',ERROR:{timeout:0,error:0}};check(10)
+    statistic={CURRENT:[0,''],SUMMATION:statistic.SUMMATION,startTIME:'',HIT:0,HITratio:'',MISS:0,EXPIRED:0,endTIME:'',ERROR:{timeout:0,error:0}};//check(10)////////////////////////////////////////////////////
    }else check(++z)}
  }
 }

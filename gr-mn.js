@@ -24,8 +24,8 @@ function get(){
 async function check(z){
  let sum=0,end
  if(z==0)statistic.startTIME=new Date().toLocaleString('zh-CN',{timeZone:'Asia/Taipei'})
- for(let x in pngObj[z]){
-  for(let y of pngObj[z][x]){
+ for(let x in pbfObj[z]){
+  for(let y of pbfObj[z][x]){
    const url=`https://grmn.iqiq.cc/${z}/${x}/${y}.pbf`
    sum++;statistic.CURRENT[0]++;statistic.CURRENT[1]=url
    await new Promise(resolve=>{

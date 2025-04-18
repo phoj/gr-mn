@@ -30,7 +30,7 @@ async function check(z){
    sum++;statistic.CURRENT[0]++;statistic.CURRENT[1]=url
    await new Promise(resolve=>{
     if(sum<=5)resolve()///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    const req=https.get(url,{timeout:10000},res=>{res.destroy()
+    const req=https.get(url,{timeout:10000},res=>{res.destroy();console.log(url)/////////////////////////////////////////////////////////
      let status=res.statusCode
      if(status!=200){
       if(!statistic.ERROR.hasOwnProperty(status))statistic.ERROR[status]=0

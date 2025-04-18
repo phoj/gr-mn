@@ -68,7 +68,7 @@ async function check(z){
 
 
 http.createServer(function(req,res){
- if(req.url=='/check'){res.end('check()');check(0);return}////////////////////////////////////////////////////////
+ if(req.url=='/check'){res.end('check(0)');console.log('check(0)');check(0);return}////////////////////////////////////////////////////////
  if(req.url=='/favicon.ico'){res.end();return}
  res.writeHead(200,{"content-type":"text/plain;charset=utf-8"})
  res.end(message)

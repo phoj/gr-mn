@@ -2,7 +2,7 @@ var http=require("http"),https=require("https")
 var message="startTime:"+new Date().toLocaleString('zh-CN',{timeZone:'Asia/Taipei'})
 var pbfObj={},statistic
 var maxZ////////////////////////////////////////////////////////////////////////////////
-//get()/////////////////////////////////////////////////////////
+get()/////////////////////////////////////////////////////////
 function get(){
  fetch('https://raw.githubusercontent.com/wbjon/2510/main/0-18.txt')
  .then(res=>{if(res.status!=200)console.error('錯誤碼',res.status);return res.text()})

@@ -1,7 +1,8 @@
 var http=require("http"),https=require("https")
 var message="startTime:"+new Date().toLocaleString('zh-CN',{timeZone:'Asia/Taipei'})
 var pbfObj={},statistic
-get()
+var maxZ////////////////////////////////////////////////////////////////////////////////
+//get()/////////////////////////////////////////////////////////
 function get(){
  fetch('https://raw.githubusercontent.com/wbjon/2510/main/0-18.txt')
  .then(res=>{if(res.status!=200)console.error('錯誤碼',res.status);return res.text()})
@@ -51,7 +52,7 @@ async function check(z){
  end=true;loop()
  function loop(){
   if(end&&sum==0){
-   if(z==4){//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   if(z==maxZ){//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     const sheet=data=>{
      fetch('https://script.google.com/macros/s/AKfycbwC42_mTmRl9XV5KTrWbU9o2mjAHJC3X_xj2VqEld9iLkGdrrQXI75xQ81V4hlEY473gA/exec?console='+encodeURIComponent(data))
      .then(res=>{if(res.status!=200){console.log('sheet status:',res.status);sheet(data)}}).catch(e=>{console.log('sheet error:',e);sheet(data)})
@@ -63,12 +64,8 @@ async function check(z){
  }
 }
 
-
-
-
-
 http.createServer(function(req,res){
- if(req.url=='/check'){res.end('check(0)');console.log('check(0)');check(0);return}////////////////////////////////////////////////////////
+ if(req.url.includes('/check')){maxZ=req.url.split('/check')[1]||0;res.end(`check(0)-check(${maxZ})`);console.log(`check(0)-check(${maxZ})`);check(0);return}////////////////////////////////////////////////////////
  if(req.url=='/favicon.ico'){res.end();return}
  res.writeHead(200,{"content-type":"text/plain;charset=utf-8"})
  res.end(message)

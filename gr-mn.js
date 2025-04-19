@@ -31,7 +31,7 @@ async function check(z){
    sum++;statistic.CURRENT[0]++;statistic.CURRENT[1]=url
    await new Promise(resolve=>{
     if(sum<=5)resolve()///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    const req=https.get(url,{timeout:10000},res=>{res.destroy();console.log(url)/////////////////////////////////////////////////////////////////////////////////////////////////
+    const req=https.get(url,{timeout:10000},res=>{res.destroy();//console.log(url)/////////////////////////////////////////////////////////////////////////////////////////////////
      let status=res.statusCode
      if(status!=200){
       if(!statistic.ERROR.hasOwnProperty(status))statistic.ERROR[status]=0
@@ -66,7 +66,7 @@ async function check(z){
 
 http.createServer(function(req,res){
  if(req.url.includes('/check')){maxZ=req.url.split('/check')[1]||0;res.end(`check(0)-check(${maxZ})`);console.log(`check(0)-check(${maxZ})`);check(0);return}////////////////////////////////////////////////////////
- if(req.url=='/favicon.ico'){res.end();return}
+ if(req.url=='/favicon.ico'){res.end(JSON.stringify(statistic));return}
  res.writeHead(200,{"content-type":"text/plain;charset=utf-8"})
  res.end(message)
 }).listen(8080)

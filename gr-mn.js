@@ -45,6 +45,10 @@ async function check(z){
       status=res.headers['cf-cache-status']
       if(!statistic.hasOwnProperty(status))statistic[status]=0
       statistic[status]++
+      let ray=res.headers['cf-ray']
+      ray=ray.split('-')[1]
+      if(!statistic.hasOwnProperty(ray))statistic[ray]=0
+      statistic[ray]++
      }
      isOk()
     }).on('error',err=>{if(!req.destroyed)statistic.ERROR.error++;isOk()})

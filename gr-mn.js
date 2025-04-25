@@ -79,7 +79,7 @@ var proxyHandle=function(req,res){
                  }).on("error",e=>{console.log("請求google req錯誤",e);res.end()})
   return
  }
- fetch(url).then(res1=>res1.arrayBuffer()).then(buf=>res.end(buf)).catch(e=>{console.log('fetch錯誤',e);res.end()})
+ fetch(url).then(res1=>res1.arrayBuffer()).then(buf=>res.end(Buffer.from(buf))).catch(e=>{console.log('fetch錯誤',e);res.end()})
  function mapUrl(){
   var garminUrl="https://maptile.garmin.com.tw/numaps/latest"
   var grmn=[],n=Math.pow(2,z)//2的幾次方

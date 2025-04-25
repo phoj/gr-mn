@@ -3,7 +3,7 @@ var https=require("https")
 var port=8080
 var message="startTime:"+new Date().toLocaleString('zh-TW',{timeZone:'Asia/Taipei'})+"(online_port:"+port+")"
 var Obj16={}
-var test=[123456,123456,123456,123456]
+var test=[123456,123456,123456,123456,123456,123456,123456,123456,123456,123456,123456,123456,123456,123456,123456,123456,123456,123456,123456,123456,123456,123456,123456,123456,123456,123456,123456,123456,123456,123456,123456,123456,123456,123456,123456,123456,123456,123456,123456,123456,123456,123456]
 
 fetch('https://raw.githubusercontent.com/phoj/gr-mn/main/16.txt')
 .then(res=>{if(res.status!=200)console.error('錯誤碼',res.status);return res.text()})
@@ -17,7 +17,7 @@ fetch('https://raw.githubusercontent.com/phoj/gr-mn/main/16.txt')
  }
  let sum=0
  for(const[key,value] of Object.entries(Obj16)){sum++
-  if(sum>100)break
+  if(sum>10)break
   console.log(key,value)
  }
 

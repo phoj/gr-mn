@@ -10,7 +10,7 @@ var mapJsonCompress={}
 https.get('https://raw.githubusercontent.com/phoj/gr-mn/main/16_x_y_[42].txt',res=>{
  const rl=readline.createInterface({input:res,crlfDelay:Infinity})
  rl.on('line',line=>{
-  const xy42=line.split('/'),arr42=xy42[2].split(',')
+  const xy42=line.split('/'),arr42=xy42[2].split(',').map(Number)
   if(!mapJsonCompress[xy42[0]])mapJsonCompress[xy42[0]]={}
   mapJsonCompress[xy42[0]][xy42[1]]=arr42
  })

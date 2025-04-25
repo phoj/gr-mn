@@ -21,8 +21,6 @@ fetch('https://raw.githubusercontent.com/phoj/gr-mn/main/16.txt')
   console.log(item)
  }
 
-
-
 }).catch(err=>console.log("請求16.txt錯誤",err))
 
 var proxyHandle=function(req,res){

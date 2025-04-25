@@ -59,6 +59,12 @@ fetch('https://raw.githubusercontent.com/phoj/gr-mn/main/16.txt')
 var proxyHandle=function(req,res){
  const arr=req.url.split('/')
  if(arr.length!=4||!/^\d+$/.test(arr[2])||!/^\d+$/.test(arr[3])){res.end(message);return}
+
+ res.end(message);return
+
+
+
+
  var z=+arr[1],x=+arr[2],y=+arr[3]
  const url=mapUrl(),rangeArr=url.split('&')
  res.writeHead(200,{"access-control-allow-origin":"*"})

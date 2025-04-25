@@ -3,17 +3,25 @@ var https=require("https")
 var readline=require('readline')
 var port=8080
 var message="startTime:"+new Date().toLocaleString('zh-TW',{timeZone:'Asia/Taipei'})+"(online_port:"+port+")"
-var Obj16={}
+var mapJsonCompress={}
 
 
 
 https.get('https://raw.githubusercontent.com/phoj/gr-mn/main/16_x_y_[42].txt',res=>{
  const rl=readline.createInterface({input:res,crlfDelay:Infinity})
- let sum=0
  rl.on('line',line=>{
-  if(sum<100)console.log(++sum,line)
+  const xy42=line.split('/'),arr42=xy42[2].split(',')
+  if(!mapJsonCompress[xy42[0]])mapJsonCompress[xy42[0]]={}
+  mapJsonCompress[xy42[0]][xy42[1]]=arr42
  })
- rl.on('close',()=>console.log('讀取完成'))
+ rl.on('close',()=>{
+  console.log('讀取完成')
+  let sum=0
+  for(const[key,value] of Object.entries(mapJsonCompress)){sum++
+   if(sum>10)break
+   console.log(key,value)
+  }
+ })
 })
 
 

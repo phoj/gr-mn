@@ -64,7 +64,6 @@ var proxyHandle=function(req,res){
 
 
 
-
  var z=+arr[1],x=+arr[2],y=+arr[3]
  const url=mapUrl(),rangeArr=url.split('&')
  res.writeHead(200,{"access-control-allow-origin":"*"})

@@ -65,7 +65,7 @@ var proxyHandle=function(req,res){
  if(rangeArr.length==3){
   https.get(url,{headers:{Authorization:auth,Range:`bytes=${rangeArr[1]}-${rangeArr[2]}`}},
    function(res1){
-                  if(res1.statusCode!=200){console.log("請求google statusCode",res1.statusCode);res1.destroy();res.end();return}
+                  if(res1.statusCode!=206){console.log("請求google statusCode",res1.statusCode);res1.destroy();res.end();return}
                   let chunks=[headBuffer]
                   res1.on("data",function(data){chunks.push(data)})
                   res1.on("end",function(){res.end(Buffer.concat(chunks))})

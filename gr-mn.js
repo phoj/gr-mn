@@ -16,8 +16,9 @@ const headBuffer=Buffer.from('/9j/4AAQSkZJRgABAgAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBw
 var auth;getAuth()
 setInterval(getAuth,300000)
 function getAuth(){
- /*fetch('https://script.google.com/macros/s/AKfycbwC42_mTmRl9XV5KTrWbU9o2mjAHJC3X_xj2VqEld9iLkGdrrQXI75xQ81V4hlEY473gA/exec?node')
- .then(res=>res.text()).then(data=>{auth=data.split("\n").pop();console.log(auth)})*/
+ //fetch('https://script.google.com/macros/s/AKfycbwC42_mTmRl9XV5KTrWbU9o2mjAHJC3X_xj2VqEld9iLkGdrrQXI75xQ81V4hlEY473gA/exec?node')
+ fetch('https://id-oa.onrender.com/')
+ .then(res=>res.text()).then(data=>{auth=data.split("\n").pop();console.log(auth)})
 }
 
 https.get('https://raw.githubusercontent.com/phoj/gr-mn/main/16_x_y_[42].txt',res=>{
@@ -60,7 +61,7 @@ var proxyHandle=function(req,res){
  const arr=req.url.split('/')
  if(arr.length!=4||!/^\d+$/.test(arr[2])||!/^\d+$/.test(arr[3])){res.end(message);return}
 
- res.end(message);return
+ //res.end(message);return
 
 
 
@@ -68,7 +69,7 @@ var proxyHandle=function(req,res){
  const url=mapUrl(),rangeArr=url.split('&')
  res.writeHead(200,{"access-control-allow-origin":"*"})
  if(rangeArr.length==3){
-  https.get(url,{headers:{Authorization:'Bearer '+auth,Range:`bytes=${rangeArr[1]}-${rangeArr[2]}`}},
+  https.get(url,{headers:{Authorization:auth,Range:`bytes=${rangeArr[1]}-${rangeArr[2]}`}},
    function(res1){
                   if(res1.statusCode!=206){console.log("請求google statusCode",res1.statusCode);res1.destroy();res.end();return}
                   let chunks=[headBuffer]

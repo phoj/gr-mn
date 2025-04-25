@@ -16,9 +16,9 @@ fetch('https://raw.githubusercontent.com/phoj/gr-mn/main/16.txt')
   Obj16[xy[0]][xy[1]]=test
  }
  let sum=0
- for(const item of Obj16){sum++
+ for(const[key,value] of Object.entries(Obj16)){sum++
   if(sum>100)break
-  console.log(item)
+  console.log(key,value)
  }
 
 }).catch(err=>console.log("請求16.txt錯誤",err))

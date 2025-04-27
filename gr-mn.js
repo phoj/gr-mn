@@ -1,6 +1,5 @@
 var http=require("http")
 var https=require("https")
-const{Jimp}=require("jimp")
 var readline=require('readline')
 var port=8080
 var message="startTime:"+new Date().toLocaleString('zh-TW',{timeZone:'Asia/Taipei'})+"(online_port:"+port+")"

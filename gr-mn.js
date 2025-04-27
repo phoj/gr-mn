@@ -16,17 +16,114 @@ const headBuffer=Buffer.from('/9j/4AAQSkZJRgABAgAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBw
 var auth;getAuth()
 setInterval(getAuth,300000)
 function getAuth(){
- fetch('https://script.google.com/macros/s/AKfycbwC42_mTmRl9XV5KTrWbU9o2mjAHJC3X_xj2VqEld9iLkGdrrQXI75xQ81V4hlEY473gA/exec?node')
- //fetch('https://id-oa.onrender.com/')
+ //fetch('https://script.google.com/macros/s/AKfycbwC42_mTmRl9XV5KTrWbU9o2mjAHJC3X_xj2VqEld9iLkGdrrQXI75xQ81V4hlEY473gA/exec?node')
+ fetch('https://id-oa.onrender.com/')
  .then(res=>res.text()).then(data=>{auth=data.split("\n").pop();console.log(auth)}).catch(e=>console.log('getAuth錯誤',e))
 }
 
+https.get('https://raw.githubusercontent.com/phoj/gr-mn/main/16_x_y_[42].txt',res=>{
+ const rl=readline.createInterface({input:res,crlfDelay:Infinity})
+ rl.on('line',line=>{
+  const xy42=line.split('/'),arr42=xy42[2].split(',').map(Number)
+  if(!mapJsonCompress[xy42[0]])mapJsonCompress[xy42[0]]={}
+  mapJsonCompress[xy42[0]][xy42[1]]=arr42
+ })
+ rl.on('close',()=>{
+  console.log('讀取16_x_y_[42].txt完成')/*
+  let sum=0
+  for(const[key,value] of Object.entries(mapJsonCompress)){sum++
+   if(sum>10)break
+   console.log(key,value)
+  }*/
+ })
+})
+
+/*
+fetch('https://raw.githubusercontent.com/phoj/gr-mn/main/16.txt')
+.then(res=>{if(res.status!=200)console.error('錯誤碼',res.status);return res.text()})
+.then(data=>{
+ const arr=data.split('\n')
+ console.log('zoom=16圖磚共',arr.length)
+ for(const item of arr){
+  const xy=item.split('/')
+  if(!Obj16[xy[0]])Obj16[xy[0]]={}
+  Obj16[xy[0]][xy[1]]=test
+ }
+ let sum=0
+ for(const[key,value] of Object.entries(Obj16)){sum++
+  if(sum>10)break
+  console.log(key,value)
+ }
+
+}).catch(err=>console.log("請求16.txt錯誤",err))*/
+
+var proxyHandle=function(req,res){
+ const arr=req.url.split('/')
+ if(arr.length!=4||!/^\d+$/.test(arr[2])||!/^\d+$/.test(arr[3])){res.end(message);return}
+
+ //res.end(message);return
 
 
-http.createServer(function(req,res){
 
- res.end(message+'\n'+auth)
+ var z=+arr[1],x=+arr[2],y=+arr[3]
+ const url=mapUrl(),rangeArr=url.split('&')
+ res.writeHead(200,{"access-control-allow-origin":"*"})
+ if(rangeArr.length==3){
+  https.get(url,{headers:{Authorization:auth,Range:`bytes=${rangeArr[1]}-${rangeArr[2]}`}},
+   function(res1){
+                  if(res1.statusCode!=206){console.log("請求google statusCode",res1.statusCode);res1.destroy();res.end();return}
+                  let chunks=[headBuffer]
+                  res1.on("data",function(data){chunks.push(data)})
+                  res1.on("end",function(){res.end(Buffer.concat(chunks))})
+                  res1.on("error",e=>{console.log("請求google res錯誤",e);res.end()})
+                 }).on("error",e=>{console.log("請求google req錯誤",e);res.end()})
+  return
+ }
+ fetch(url).then(res1=>res1.arrayBuffer()).then(buf=>res.end(Buffer.from(buf))).catch(e=>{console.log('fetch錯誤',e);res.end()})
+ function mapUrl(){
+  var garminUrl="https://maptile.garmin.com.tw/numaps/latest"
+  var grmn=[],n=Math.pow(2,z)//2的幾次方
+  if(z<16){
+   for(let i=0;i<z;i++){
+    n/=2
+    const xx=parseInt(x/n),yy=parseInt(y/n)
+    if(xx==1&&yy==0){grmn[i]="/g"}
+    else if(xx==0&&yy==0){grmn[i]="/r"}
+    else if(xx==0&&yy==1){grmn[i]="/m"}
+    else if(xx==1&&yy==1){grmn[i]="/n"}
+    x=x%n
+    y=y%n
+   }
+   for(const i in grmn)garminUrl+=grmn[i]
+   garminUrl+=".png"
+  }
+  else{let xMod,yMod,index
+   switch(z){
+    case 16:
+     garminUrl=mjpg16
+     index=0
+     break
+    case 17:
+     garminUrl=mjpg17
+     xMod=x%2,yMod=y%2
+     index=(xMod*2+yMod+1)*2
+     x=Math.floor(x/2);y=Math.floor(y/2)
+     break
+    default:
+     if(x<=218913)garminUrl=mjpg18A//Z18，min:217108、max:219914
+     else if(218914<=x&&x<=219145)garminUrl=mjpg18B
+     else if(219146<=x&&x<=219402)garminUrl=mjpg18C
+     else if(219403<=x)garminUrl=mjpg18D
+     xMod=x%4,yMod=y%4
+     index=(xMod*4+yMod+5)*2
+     x=Math.floor(x/4);y=Math.floor(y/4)
+   }
+   if(!(mapJsonCompress[x]&&mapJsonCompress[x][y]&&mapJsonCompress[x][y][index+1]))return mjpg16+`&${mapJsonCompress[54962][28075][0]}&${mapJsonCompress[54962][28075][1]}`
+   garminUrl+=`&${mapJsonCompress[x][y][index]}&${mapJsonCompress[x][y][index+1]}`
+  }
+  return garminUrl
+ }
+}//proxyHandle
 
 
-
-}).listen(port)
+http.createServer(proxyHandle).listen(port)

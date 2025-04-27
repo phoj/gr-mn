@@ -16,8 +16,8 @@ const headBuffer=Buffer.from('/9j/4AAQSkZJRgABAgAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBw
 var auth;getAuth()
 setInterval(getAuth,300000)
 function getAuth(){
- //fetch('https://script.google.com/macros/s/AKfycbwC42_mTmRl9XV5KTrWbU9o2mjAHJC3X_xj2VqEld9iLkGdrrQXI75xQ81V4hlEY473gA/exec?node')
- fetch('https://id-oa.onrender.com/')
+ fetch('https://script.google.com/macros/s/AKfycbwC42_mTmRl9XV5KTrWbU9o2mjAHJC3X_xj2VqEld9iLkGdrrQXI75xQ81V4hlEY473gA/exec?node')
+ //fetch('https://id-oa.onrender.com/')
  .then(res=>res.text()).then(data=>{auth=data.split("\n").pop();console.log(auth)}).catch(e=>console.log('getAuth錯誤',e))
 }
 

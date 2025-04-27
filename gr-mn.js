@@ -21,28 +21,6 @@ function getAuth(){
  .then(res=>res.text()).then(data=>{auth=data.split("\n").pop();console.log(auth)}).catch(e=>console.log('getAuth錯誤',e))
 }
 
-
-
-
-https.get('https://raw.githubusercontent.com/wbjon/2510/main/16/54962/28075.jpg',res=>{
- const chunks=[]
- res.on('data',chunk=>chunks.push(chunk))
- res.on('end',()=>{
-  blank=Buffer.concat(chunks);
-  console.log('16/54962/28075.jpg空圖大小',blank.length,'bytes')
- })
-})
-
-
-
-
-
-
-
-
-
-
-
 https.get('https://raw.githubusercontent.com/phoj/gr-mn/main/16_x_y_[42].txt',res=>{
  const rl=readline.createInterface({input:res,crlfDelay:Infinity})
  rl.on('line',line=>{

@@ -24,7 +24,7 @@ https.get('https://raw.githubusercontent.com/wbjon/2510/main/16/54962/28075.jpg'
  })
 })
 
-var auth
+var auth;getAuth()
 setInterval(getAuth,300000)
 function getAuth(){
  fetch('https://script.google.com/macros/s/AKfycbwC42_mTmRl9XV5KTrWbU9o2mjAHJC3X_xj2VqEld9iLkGdrrQXI75xQ81V4hlEY473gA/exec?node')
